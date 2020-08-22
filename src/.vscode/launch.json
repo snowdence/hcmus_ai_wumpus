@@ -8,8 +8,8 @@
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/wumpus.py",
-      //"program": "${file}",
+      //"program": "${workspaceFolder}/wumpus.py",
+      "program": "${file}",
 
       "console": "integratedTerminal"
     }
