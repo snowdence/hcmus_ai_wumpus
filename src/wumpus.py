@@ -4,7 +4,6 @@ from gpath import *
 from constants import *
 from states import *
 
-from cores.layout.parser import Parser
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
