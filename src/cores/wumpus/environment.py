@@ -50,10 +50,13 @@ class WumpusWorldEnv:
         self.score = 0
 
         self.line_array = lines[1:].copy()
+
+        # parse use top left
         for (r, line_row) in enumerate(self.line_array, start=0):
             cell = line_row.split('.')
             for (c, cell) in enumerate(cell, start=0):
-                self.set_room_encode_str(r, c, cell)  # set to map_encode
+                self.map_encode[r][c] = cell
+                # self.set_room_encode_str(r, c, cell)  # set to map_encode
                 if RoomEncodeChar.GOLD in cell:
                     self.gold += 1
                 elif RoomEncodeChar.WUMPUS in cell:

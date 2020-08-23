@@ -1,14 +1,19 @@
 import sys
 import os
-try:
-    import setting
-    import gpath
-    from cores.wumpus.enviroment import WumpusWorldEnv
-except:
-    sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
-    import setting
-    import gpath
-    from cores.wumpus.enviroment import WumpusWorldEnv
+import setting
+import gpath
+from ..wumpus.environment import WumpusWorldEnv
+
+# try:
+#     import setting
+#     import gpath
+#     from cores.wumpus.enviroment import WumpusWorldEnv
+# except:
+#     sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
+#     print(sys.path)
+#     import setting
+#     import gpath
+#    # from cores.wumpus.enviroment import WumpusWorldEnv
 
 
 class Parser:
