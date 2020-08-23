@@ -20,6 +20,14 @@ class PlayGameScreen(GameScreen):
         p = Parser()
         self.loaded_map = p.load_wumpus_env(gpath.PATH_MAP + 'map_4_4.txt')
         self.tile_manager = TileManager(self.loaded_map)
+        print("ok")
+
+    def SnakeLoL(self, n):
+        # Sq LoL filled with a range
+        Sq = [[1 + i + n * j for i in range(n)] for j in range(n)]
+        for row in Sq[1::2]:
+            row.reverse()     # reverse odd row's columns
+        return Sq[::-1][:]    # reverse order of rows
 
     def update(self):
         pass

@@ -24,7 +24,7 @@ class WumpusWorldEnv:
     # height, width  (row, col)
     shape = (0, 0)
     map_encode: [[]] = [[]]  # matrix hxw
-    map_solved: [[]] = [[]]
+    map_solved: [[]] = [[]]  # matrix
 
     # 13 14 15 16 #0
     # 9 10 11 12  #1
