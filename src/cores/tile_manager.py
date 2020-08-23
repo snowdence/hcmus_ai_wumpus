@@ -37,26 +37,27 @@ class TileManager(object):
                     self.breeze_group.append(
                         Breeze(self, (c, r))
                     )  # use top left x, y
-                elif RoomEncodeChar.WUMPUS in cell:
+                if RoomEncodeChar.WUMPUS in cell:
                     self.wumpus_group.append(
                         Wumpus(self, (c, r))
                     )
-                elif RoomEncodeChar.GOLD in cell:
+                if RoomEncodeChar.GOLD in cell:
                     self.gold_group.append(
                         Gold(self, (c, r))
                     )
-                elif RoomEncodeChar.PIT in cell:
+                if RoomEncodeChar.PIT in cell:
                     self.pit_group.append(
                         Pit(self, (c, r))
                     )
-                elif RoomEncodeChar.STENCH in cell:
+                if RoomEncodeChar.STENCH in cell:
                     self.stench_group.append(
                         Stench(self, (c, r))
                     )
-    idx = 0
 
     def render_all_ui(self, surface):
 
+        for ground in self.ground_group:
+            ground.tile_render(surface)
         for stench in self.stench_group:
             stench.tile_render(surface)
 
@@ -72,16 +73,7 @@ class TileManager(object):
         for wumpus in self.wumpus_group:
             wumpus.tile_render(surface)
 
-        for ground in self.ground_group:
-            if self.idx % 2 == 0:
-                ground.show()
-            else:
-                ground.hide()
-            ground.tile_render(surface)
-        self.idx += 1
-
         self.player.tile_render(surface)
-        pygame.time.wait(1000)
 
 
 if __name__ == "__main__":
