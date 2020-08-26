@@ -26,6 +26,7 @@ class WumpusWorldEnv:
     map_encode: [[]] = [[]]  # matrix hxw
     map_solved: [[]] = [[]]  # matrix
 
+    map_reverse = [[]] = [[]]
     # 13 14 15 16 #0
     # 9 10 11 12  #1
     # 5 6 7 8     #2
@@ -61,6 +62,7 @@ class WumpusWorldEnv:
                     self.gold += 1
                 elif RoomEncodeChar.WUMPUS in cell:
                     self.wumpus += 1
+        self.map_reverse = self.map_encode[::-1][:]
 
     def set_world_size(self, h, w):
         """h : height, row

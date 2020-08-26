@@ -8,7 +8,7 @@
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/wumpus.py",
+      "program": "${workspaceFolder}/tests/test_agent_kb.py",
       //"program": "${file}",
 
       "console": "integratedTerminal"
