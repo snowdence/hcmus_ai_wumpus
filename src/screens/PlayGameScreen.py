@@ -18,7 +18,7 @@ class PlayGameScreen(GameScreen):
         print("Created Game Screen")
 
         p = Parser()
-        self.loaded_map = p.load_wumpus_env(gpath.PATH_MAP + 'map_4_4.txt')
+        self.loaded_map = p.load_wumpus_env(gpath.PATH_MAP + 'map_10_10.txt')
         self.tile_manager = TileManager(self.loaded_map)
         print("ok")
 

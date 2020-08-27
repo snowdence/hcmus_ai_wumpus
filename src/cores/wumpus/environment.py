@@ -133,19 +133,19 @@ class WumpusWorldEnv:
         return self.map_solved[self.height - y - 1][x] != RoomEncodeChar.NOT_SOLVED
 
     def has_breeze(self, x, y):
-        return RoomEncodeChar.BREEZE in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.BREEZE in self.get_room_encode_str(x, y)
 
     def has_pit(self, x, y):
-        return RoomEncodeChar.PIT in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.PIT in self.get_room_encode_str(x, y)
 
     def has_wumpus(self, x, y):
-        return RoomEncodeChar.WUMPUS in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.WUMPUS in self.get_room_encode_str(x, y)
 
     def has_stench(self, x, y):
-        return RoomEncodeChar.STENCH in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.STENCH in self.get_room_encode_str(x, y)
 
     def has_gold(self, x, y):
-        return RoomEncodeChar.GOLD in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.GOLD in self.get_room_encode_str(x, y)
 
     def has_empty(self, x, y):
-        return RoomEncodeChar.EMPTY in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.EMPTY in self.get_room_encode_str(x, y)

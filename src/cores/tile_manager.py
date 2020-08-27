@@ -24,7 +24,7 @@ class TileManager(object):
         self.env_wumpus = env
         self.shape = env.shape
         self.tranform_buffer_ui()
-        self.player = Player(self, (0, 3))
+        self.player = Player(self, (0, 9))
 
     def tranform_buffer_ui(self):
         rows, cols = self.shape

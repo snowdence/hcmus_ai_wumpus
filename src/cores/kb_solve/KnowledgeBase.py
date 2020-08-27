@@ -11,7 +11,7 @@ class DIRECTIONS:
     SOUTH = (0, -1)
     EAST = (1, 0)
     WEST = (-1, 0)
-    l_directions = [UP, DOWN, RIGHT, LEFT]
+    L_DIRECTIONS = [UP, DOWN, RIGHT, LEFT]
     LM_DIRECTIONS = [NORTH, SOUTH, EAST, WEST]
 
 
