@@ -1,6 +1,8 @@
 from .agent import Agent
 from .directions import DIRECTIONS
 
+import numpy as np
+
 
 class Game(object):
     world: [[]] = None
@@ -104,3 +106,7 @@ class Game(object):
 
         else:
             print("No gold here")
+
+# 1 2 3
+# 4 5 6  4 => (1,0)
+# 7 8 9
