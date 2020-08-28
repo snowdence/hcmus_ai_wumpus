@@ -10,12 +10,15 @@ class GluAgent(object):
     gold_list = []
     aim_gold = 0
 
+    score = 0
+
     def __init__(self, world_env):
         self.kb = KB(world_env.shape[0], world_env.shape[1])
         self.env = world_env
         self.move(0, 0)
         self.finished = False
         self.aim_gold = 6
+        self.score = 0
 
     def perceive(self, x, y):
         env = self.env
@@ -31,6 +34,7 @@ class GluAgent(object):
         if env.has_gold(x, y):
             if ((x, y) not in self.gold_list):
                 self.gold_list.append((x, y))
+                self.score += 100
             if len(self.gold_list) == self.aim_gold:
                 self.finished = True
             else:
@@ -54,4 +58,4 @@ class GluAgent(object):
         unexpaned_safe_list = self.kb.get_unexpanded_safe_list()
         unexpaned_safe_list.sort()
         choose_safe = unexpaned_safe_list.pop(0)
-        self.move(choose_safe[0], choose_safe[1])
+        return choose_safe

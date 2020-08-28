@@ -9,6 +9,10 @@ from cores.tile_manager import *
 from cores.layout.parser import Parser
 
 
+from cores.kb_solve.kb import KB
+from cores.kb_solve.glu_agent import *
+
+
 class PlayGameScreen(GameScreen):
     loaded_map = None
     tile_manager = None
@@ -22,15 +26,8 @@ class PlayGameScreen(GameScreen):
         self.tile_manager = TileManager(self.loaded_map)
         print("ok")
 
-    def SnakeLoL(self, n):
-        # Sq LoL filled with a range
-        Sq = [[1 + i + n * j for i in range(n)] for j in range(n)]
-        for row in Sq[1::2]:
-            row.reverse()     # reverse odd row's columns
-        return Sq[::-1][:]    # reverse order of rows
-
     def update(self):
-        pass
+        self.tile_manager.update_step()
 
     def render(self, window):
         window.fill((0, 0, 0))
@@ -39,6 +36,8 @@ class PlayGameScreen(GameScreen):
             "HelloWorld", True, (100, 0, 0))
         window.blit(text_point, (0, 0))
         self.tile_manager.render_all_ui(window)
+
+        pygame.time.wait(100)
 
     def clear(self):
         pass

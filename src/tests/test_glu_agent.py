@@ -19,8 +19,8 @@ if __name__ == "__main__":
     loaded_map = p.load_wumpus_env(gpath.PATH_MAP + 'map_10_10.txt')
     glu_agent = GluAgent(loaded_map)
     while glu_agent.finished != True and glu_agent.has_solved_safe_node():
-        glu_agent.get_action()
-
+        move_pos = glu_agent.get_action()
+        glu_agent.move(move_pos[0], move_pos[1])
     print("opned all safe node and gold is " + str(len(glu_agent.gold_list)))
     # glu_agent.get_action()
     print("Edn test")

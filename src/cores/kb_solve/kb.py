@@ -119,6 +119,12 @@ class KB(object):
             j = adj % self.shape[1] - 1
         return (j, i)
 
+    def get_kb_solved_pit(self):
+        return [self.adj_to_xy(item) for item in self.kb_solved_pit]
+
+    def get_kb_solved_wumpus(self):
+        return [self.adj_to_xy(item) for item in self.kb_solved_wumpus]
+
     def get_all_adj(self, x, y, i_kernel=[-1, 0, 1], j_kernel=[-1, 0, 1]):
         res = []
         for i in [-1, 0, 1]:
@@ -174,7 +180,7 @@ class KB(object):
 
         l_adj = self.get_all_adj_4_direction(x, y)
         for adj in l_adj:
-            #item = self.adj_to_xy(adj)
+            # item = self.adj_to_xy(adj)
             self.kb_glu_wumpus.append([-adj])
         self.kb_glu_pit.append(l_adj)
 
@@ -182,7 +188,7 @@ class KB(object):
         self.add_safe_node(x, y)
         l_adj = self.get_all_adj_4_direction(x, y)
         for adj in l_adj:
-            #item = self.adj_to_xy(adj)
+            # item = self.adj_to_xy(adj)
             self.kb_glu_pit.append([-adj])
         self.kb_glu_wumpus.append(l_adj)
 
@@ -274,6 +280,24 @@ class KB(object):
         print("============= <KB> ==============")
         self.print_map_solved()
 
+    def get_map_solved(self):
+        ms = [
+            [KBEncode.NOT_SOLVED for i in range(self.shape[0])] for j in range(self.shape[1])
+        ]
+        for y in range(self.shape[0]-1, -1, -1):
+            for x in range(self.shape[0]):
+                if self.kb_map_wumpus[x][y] > 0 and self.kb_map_pit[x][y] < 0:  # wumpus
+                    ms[x][y] = "W"
+                elif self.kb_map_pit[x][y] > 0 and self.kb_map_wumpus[x][y] < 0:
+                    ms[x][y] = "P"
+                elif self.kb_map_pit[x][y] < 0 and self.kb_map_wumpus[x][y] < 0:
+                    ms[x][y] = "OK"
+                elif (x, y) in self.safe_nodes:
+                    ms[x][y] = "OK"
+                else:
+                    ms[x][y] = "?"
+        return ms
+
     def print_map_solved(self):
         print("=========== Map ==================")
         for y in range(self.shape[0]-1, -1, -1):
@@ -312,8 +336,8 @@ if __name__ == "__main__":
     kb.resolve()
 
     kb.register_move(1, 2)
-    #kb.tell_stench(1, 2)
-    #kb.tell_breeze(1, 2)
+    # kb.tell_stench(1, 2)
+    # kb.tell_breeze(1, 2)
     kb.tell_stench_and_breeze(1, 2)
     kb.resolve()
     kb.print_kb()
