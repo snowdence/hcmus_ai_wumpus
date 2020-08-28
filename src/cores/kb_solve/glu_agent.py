@@ -2,6 +2,10 @@ from .kb import *
 from ..wumpus.environment import WumpusWorldEnv
 
 
+def manhattan_distance(x, y):
+    return sum(abs(a-b) for a, b in zip(x, y))
+
+
 class GluAgent(object):
     env: WumpusWorldEnv = None
     current_pos = (0, 0)
@@ -56,6 +60,7 @@ class GluAgent(object):
 
     def get_action(self):
         unexpaned_safe_list = self.kb.get_unexpanded_safe_list()
-        unexpaned_safe_list.sort()
+        unexpaned_safe_list.sort(
+            key=lambda x: manhattan_distance(x, self.current_pos))
         choose_safe = unexpaned_safe_list.pop(0)
         return choose_safe

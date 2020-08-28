@@ -31,7 +31,7 @@ class TileManager(object):
         self.player = Player(self, (0, 0))
         print("Gluagent")
         self.glu_agent = GluAgent(self.env_wumpus)
-        self.ui_move_player(0, 1)
+        self.ui_move_player(0, 0)
 
     def step(self):
         while glu_agent.finished != True and glu_agent.has_solved_safe_node():
@@ -47,8 +47,7 @@ class TileManager(object):
     def show_all_cell_tile(self, x, y):
         for ground in self.ground_group:
             if ground.get_position() == (x, self.shape[1] - y - 1):
-                # ground.hide()
-                pass
+                ground.mark_visited()
 
         for stench in self.stench_group:
             if stench.get_position() == (x, self.shape[1] - y - 1):
@@ -106,6 +105,7 @@ class TileManager(object):
     def render_all_ui(self, surface):
         all_safe_nodes = self.glu_agent.kb.get_map_solved()
         for ground in self.ground_group:
+
             ground.tile_render(surface)
 
         for stench in self.stench_group:

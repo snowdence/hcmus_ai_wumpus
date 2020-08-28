@@ -40,6 +40,12 @@ class GameObject(object):
             self.texture = pygame.Surface((64, 64))
             self.texture.fill((100, 0, 0))  # red as default
 
+    def change_img(self, image_file):
+        self.layer_img = pygame.image.load(image_file)
+        self.texture = pygame.transform.scale(
+            self.layer_img, (64, 64)
+        )
+
     def hide(self):
         self.visible = False
 
