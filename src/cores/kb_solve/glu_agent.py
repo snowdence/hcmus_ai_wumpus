@@ -25,6 +25,7 @@ class GluAgent(object):
         self.score = 0
 
     def perceive(self, x, y):
+        #  Kiểm tra ô x,y có gì
         env = self.env
         if env.has_breeze(x, y) and env.has_stench(x, y):
             self.kb.tell_stench_and_breeze(x, y)
@@ -48,6 +49,7 @@ class GluAgent(object):
         print("Perceiving")
 
     def move(self, x, y):
+        # dịch vị trí agent tới (x,y) => Thông báo tới KB
         self.current_pos = (x, y)
         self.kb.register_move(x, y)
         self.perceive(x, y)
@@ -56,9 +58,11 @@ class GluAgent(object):
         print("GOTO (x,y) = ({0}, {1})".format(x, y))
 
     def has_solved_safe_node(self):
+
         return len(self.kb.get_unexpanded_safe_list()) > 0
 
     def get_action(self):
+        # Lấy bước đi tiếp theo, Lấy trong danh sách safelist
         unexpaned_safe_list = self.kb.get_unexpanded_safe_list()
         unexpaned_safe_list.sort(
             key=lambda x: manhattan_distance(x, self.current_pos))
