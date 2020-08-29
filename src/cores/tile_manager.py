@@ -99,6 +99,9 @@ class TileManager(object):
             self.glu_agent.move(move_pos[0], move_pos[1])
             self.ui_move_player(move_pos[0], move_pos[1])
         else:
+
+            graph = self.glu_agent.kb.get_graph_bfs_solved()
+
             print("opend all safe node and gold is " +
                   str(len(self.glu_agent.gold_list)))
 

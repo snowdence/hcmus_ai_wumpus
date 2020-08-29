@@ -21,6 +21,8 @@ if __name__ == "__main__":
     while glu_agent.finished != True and glu_agent.has_solved_safe_node():
         move_pos = glu_agent.get_action()
         glu_agent.move(move_pos[0], move_pos[1])
+        graph = glu_agent.kb.get_graph_bfs_solved()
+        print()
     print("opned all safe node and gold is " + str(len(glu_agent.gold_list)))
     # glu_agent.get_action()
     print("Edn test")
