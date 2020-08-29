@@ -9,6 +9,8 @@ import pygame
 from cores.kb_solve.kb import KB
 from cores.kb_solve.glu_agent import *
 
+from cores.search.bfs import *
+
 
 class TileManager(object):
     env_wumpus: WumpusWorldEnv = None
@@ -22,6 +24,9 @@ class TileManager(object):
     player = None
     pit_group = []
     glu_agent = None
+
+    performing_player = True
+    performing_step = []
 
     def __init__(self, env: WumpusWorldEnv):
         print("TileManger()")
@@ -42,6 +47,7 @@ class TileManager(object):
 
     def ui_move_player(self, x, y):
         self.player.set_position(x, self.shape[1] - y - 1)
+        self.glu_agent.score -= 10
         self.show_all_cell_tile(x, y)
 
     def show_all_cell_tile(self, x, y):
@@ -94,16 +100,58 @@ class TileManager(object):
                     )
 
     def update_step(self):
-        if self.glu_agent.finished != True and self.glu_agent.has_solved_safe_node():
-            move_pos = self.glu_agent.get_action()
-            self.glu_agent.move(move_pos[0], move_pos[1])
-            self.ui_move_player(move_pos[0], move_pos[1])
+        # if self.glu_agent.finished != True and self.glu_agent.has_solved_safe_node():
+        #     move_pos = self.glu_agent.get_action()
+        #     self.glu_agent.move(move_pos[0], move_pos[1])
+        #     self.ui_move_player(move_pos[0], move_pos[1])
+        # else:
+        #     print("opend all safe node and gold is " +
+        #           str(len(self.glu_agent.gold_list)))
+
+        # return
+        ps = len(self.performing_step)
+        if ps > 0:
+            (px, py) = self.player.get_position()
+            (px, py) = (px, self.env_wumpus.shape[1] - py - 1)
+            act = self.performing_step.pop(0)
+            vect_d = (0, 0)
+            if act == 0:
+                vect_d = (-1, 0)
+            elif act == 1:
+                vect_d = (0, -1)
+            elif act == 2:
+                vect_d = (1, 0)
+            elif act == 3:
+                vect_d = (0, 1)
+            new_pos = (px + vect_d[0], py+vect_d[1])
+            self.ui_move_player(new_pos[0], new_pos[1])
+            print("Temp move")
         else:
+            if self.glu_agent.finished != True and self.glu_agent.has_solved_safe_node():
+                move_pos = self.glu_agent.get_action()
+                if manhattan_distance(move_pos, self.glu_agent.current_pos) > 1:
+                    (px, py) = self.player.get_position()
+                    map_solve = self.glu_agent.kb.get_map_solved()
+                    (px, py) = (px, self.env_wumpus.shape[1] - py - 1)
+                    maze_problem = MazeProblem(
+                        self.env_wumpus.shape[0], self.env_wumpus.shape[1],
+                        map_solve, MazeState(px, py), MazeState(move_pos[0], move_pos[1]))
+                    bfs = BFS()
+                    result, closed, cost = bfs.search(maze_problem, True)
+                    result_action_code = [
+                        rslt_item.actionCode for rslt_item in result]
+                    if len(result_action_code) == 1:
+                        print("crsah")
+                    self.performing_step = result_action_code
+                    self.glu_agent.move(move_pos[0], move_pos[1])
 
-            graph = self.glu_agent.kb.get_graph_bfs_solved()
+                else:
+                    self.glu_agent.move(move_pos[0], move_pos[1])
+                    self.ui_move_player(move_pos[0], move_pos[1])
+            else:
 
-            print("opend all safe node and gold is " +
-                  str(len(self.glu_agent.gold_list)))
+                print("opend all safe node and gold is " +
+                      str(len(self.glu_agent.gold_list)))
 
     def render_all_ui(self, surface):
         all_safe_nodes = self.glu_agent.kb.get_map_solved()

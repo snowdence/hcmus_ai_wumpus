@@ -32,11 +32,11 @@ class PlayGameScreen(GameScreen):
     def render(self, window):
         window.fill((0, 0, 0))
 
-        text_point = self.title_font.render(
-            "HelloWorld", True, (100, 0, 0))
-        window.blit(text_point, (0, 0))
         self.tile_manager.render_all_ui(window)
 
+        text_point = self.title_font.render(
+            "Score: " + str(self.tile_manager.glu_agent.score), True, (100, 0, 0))
+        window.blit(text_point, (0, 0))
         pygame.time.wait(100)
 
     def clear(self):

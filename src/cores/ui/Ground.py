@@ -27,7 +27,9 @@ class Ground(GameObject):
             self.visited = True
             self.change_img(image_file=gpath.PATH_IMAGE + "ground1.png")
         else:
-            self.change_img(image_file=gpath.PATH_IMAGE + "debug_ground.png")
+            # do nothign
+            pass
+            #self.change_img(image_file=gpath.PATH_IMAGE + "debug_ground.png")
 
     def tile_render(self, surface):
         self.render(surface)

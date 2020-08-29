@@ -5,3 +5,4 @@ from . import tile_manager
 from . import kb_solve
 from .solver import *
 from .utils import *
+from . import agent

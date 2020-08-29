@@ -8,7 +8,7 @@
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
-      //"program": "${workspaceFolder}/tests/test_glu_agent.py",
+      //"program": "${workspaceFolder}/tests/test_bfs.py",
       //"program": "${file}",
       "program": "${workspaceFolder}/wumpus.py",
 

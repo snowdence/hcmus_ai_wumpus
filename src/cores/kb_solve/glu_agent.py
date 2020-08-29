@@ -21,7 +21,7 @@ class GluAgent(object):
         self.env = world_env
         self.move(0, 0)
         self.finished = False
-        self.aim_gold = 6
+        self.aim_gold = 999
         self.score = 0
 
     def perceive(self, x, y):
@@ -50,6 +50,7 @@ class GluAgent(object):
 
     def move(self, x, y):
         # dịch vị trí agent tới (x,y) => Thông báo tới KB
+
         self.current_pos = (x, y)
         self.kb.register_move(x, y)
         self.perceive(x, y)
@@ -58,7 +59,6 @@ class GluAgent(object):
         print("GOTO (x,y) = ({0}, {1})".format(x, y))
 
     def has_solved_safe_node(self):
-
         return len(self.kb.get_unexpanded_safe_list()) > 0
 
     def get_action(self):
