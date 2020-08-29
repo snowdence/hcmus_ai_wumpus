@@ -18,7 +18,7 @@ class Setting:
     BLUE = (0, 0, 255)
     YELLOW = (255, 255, 0)
 
-    TILE_SIZE = 32
+    TILE_SIZE = 64
 
     def hack(self):
         pass

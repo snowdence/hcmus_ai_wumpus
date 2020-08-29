@@ -24,8 +24,9 @@ class WumpusWorldEnv:
     # height, width  (row, col)
     shape = (0, 0)
     map_encode: [[]] = [[]]  # matrix hxw
-    map_solved: [[]] = [[]]
+    map_solved: [[]] = [[]]  # matrix
 
+    map_reverse = [[]] = [[]]
     # 13 14 15 16 #0
     # 9 10 11 12  #1
     # 5 6 7 8     #2
@@ -50,14 +51,18 @@ class WumpusWorldEnv:
         self.score = 0
 
         self.line_array = lines[1:].copy()
+
+        # parse use top left
         for (r, line_row) in enumerate(self.line_array, start=0):
             cell = line_row.split('.')
             for (c, cell) in enumerate(cell, start=0):
-                self.set_room_encode_str(r, c, cell)  # set to map_encode
+                self.map_encode[r][c] = cell
+                # self.set_room_encode_str(r, c, cell)  # set to map_encode
                 if RoomEncodeChar.GOLD in cell:
                     self.gold += 1
                 elif RoomEncodeChar.WUMPUS in cell:
                     self.wumpus += 1
+        self.map_reverse = self.map_encode[::-1][:]
 
     def set_world_size(self, h, w):
         """h : height, row
@@ -128,19 +133,19 @@ class WumpusWorldEnv:
         return self.map_solved[self.height - y - 1][x] != RoomEncodeChar.NOT_SOLVED
 
     def has_breeze(self, x, y):
-        return RoomEncodeChar.BREEZE in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.BREEZE in self.get_room_encode_str(x, y)
 
     def has_pit(self, x, y):
-        return RoomEncodeChar.PIT in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.PIT in self.get_room_encode_str(x, y)
 
     def has_wumpus(self, x, y):
-        return RoomEncodeChar.WUMPUS in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.WUMPUS in self.get_room_encode_str(x, y)
 
     def has_stench(self, x, y):
-        return RoomEncodeChar.STENCH in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.STENCH in self.get_room_encode_str(x, y)
 
     def has_gold(self, x, y):
-        return RoomEncodeChar.GOLD in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.GOLD in self.get_room_encode_str(x, y)
 
     def has_empty(self, x, y):
-        return RoomEncodeChar.EMPTY in self.get_room_solved_str(x, y)
+        return RoomEncodeChar.EMPTY in self.get_room_encode_str(x, y)
