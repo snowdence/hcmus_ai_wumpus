@@ -36,7 +36,18 @@ class PlayGameScreen(GameScreen):
 
         text_point = self.title_font.render(
             "Score: " + str(self.tile_manager.glu_agent.score), True, (100, 0, 0))
-        window.blit(text_point, (0, 0))
+        gold = self.title_font.render(
+            "Gold: " + str(len(self.tile_manager.glu_agent.gold_list)), True, (100, 0, 0))
+        step = self.title_font.render(
+            "Step: " + str(len(self.tile_manager.log_ui_pos)), True, (200, 0, 0))
+        safe_nodes = self.title_font.render(
+            "Safe: " + str(len(self.tile_manager.glu_agent.kb.safe_nodes)), True, (200, 0, 0))
+
+        window.blit(text_point, (640, 0))
+        window.blit(gold, (640, 100))
+        window.blit(step, (640, 200))
+        window.blit(safe_nodes, (640, 300))
+
         pygame.time.wait(100)
 
     def clear(self):

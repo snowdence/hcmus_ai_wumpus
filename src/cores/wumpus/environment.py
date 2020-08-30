@@ -27,6 +27,8 @@ class WumpusWorldEnv:
     map_solved: [[]] = [[]]  # matrix
 
     map_reverse = [[]] = [[]]
+
+    init_player = (0, 0)
     # 13 14 15 16 #0
     # 9 10 11 12  #1
     # 5 6 7 8     #2
@@ -34,6 +36,7 @@ class WumpusWorldEnv:
 
     def __init__(self, line_array: [] = None):
         print("Wumpus World Env")
+        self.init_player = (0, 0)
 
         if line_array != None:
             self.parse_lines_array(line_array)
@@ -62,6 +65,9 @@ class WumpusWorldEnv:
                     self.gold += 1
                 elif RoomEncodeChar.WUMPUS in cell:
                     self.wumpus += 1
+                if 'A' in cell:
+                    self.init_player = (c, self.shape[0] - r - 1)
+                    self.map_encode[r][c] = '-'
         self.map_reverse = self.map_encode[::-1][:]
 
     def set_world_size(self, h, w):

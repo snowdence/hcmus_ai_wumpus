@@ -15,14 +15,16 @@ class GluAgent(object):
     aim_gold = 0
 
     score = 0
+    init_pos = (0, 0)
 
-    def __init__(self, world_env):
+    def __init__(self, world_env, init_player_pos=(0, 0)):
         self.kb = KB(world_env.shape[0], world_env.shape[1])
         self.env = world_env
-        self.move(0, 0)
         self.finished = False
         self.aim_gold = 999
         self.score = 0
+        self.init_pos = init_player_pos
+        self.move(self.init_pos[0], self.init_pos[1])
 
     def perceive(self, x, y):
         #  Kiểm tra ô x,y có gì
@@ -66,5 +68,9 @@ class GluAgent(object):
         unexpaned_safe_list = self.kb.get_unexpanded_safe_list()
         unexpaned_safe_list.sort(
             key=lambda x: manhattan_distance(x, self.current_pos))
-        choose_safe = unexpaned_safe_list.pop(0)
-        return choose_safe
+        if len(unexpaned_safe_list) > 0:
+            choose_safe = unexpaned_safe_list.pop(0)
+            return choose_safe
+        else:
+            self.finished = True
+            return self.init_pos

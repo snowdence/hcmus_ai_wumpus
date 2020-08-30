@@ -28,24 +28,33 @@ class TileManager(object):
     performing_player = True
     performing_step = []
 
+    log_ui_pos = []
+
+    game_over = False
+
     def __init__(self, env: WumpusWorldEnv):
         print("TileManger()")
         self.env_wumpus = env
         self.shape = env.shape
         self.tranform_buffer_ui()
-        self.player = Player(self, (0, 0))
+        self.player = Player(self, env.init_player)
+        self.glu_agent = GluAgent(self.env_wumpus, env.init_player)
+        self.ui_move_player(env.init_player[0], env.init_player[1])
         print("Gluagent")
-        self.glu_agent = GluAgent(self.env_wumpus)
-        self.ui_move_player(0, 0)
+        self.log_ui_pos = []
+        self.game_over = False
 
     def step(self):
         while glu_agent.finished != True and glu_agent.has_solved_safe_node():
             move_pos = glu_agent.get_action()
             glu_agent.move(move_pos[0], move_pos[1])
+
         print("opend all safe node and gold is " +
               str(len(glu_agent.gold_list)))
 
     def ui_move_player(self, x, y):
+        self.log_ui_pos.append((x, self.shape[1] - y - 1))
+
         self.player.set_position(x, self.shape[1] - y - 1)
         self.glu_agent.score -= 10
         self.show_all_cell_tile(x, y)
@@ -100,6 +109,8 @@ class TileManager(object):
                     )
 
     def update_step(self):
+        if self.game_over == True:
+            return
         # if self.glu_agent.finished != True and self.glu_agent.has_solved_safe_node():
         #     move_pos = self.glu_agent.get_action()
         #     self.glu_agent.move(move_pos[0], move_pos[1])
@@ -127,7 +138,7 @@ class TileManager(object):
             self.ui_move_player(new_pos[0], new_pos[1])
             print("Temp move")
         else:
-            if self.glu_agent.finished != True and self.glu_agent.has_solved_safe_node():
+            if self.glu_agent.finished != True:
                 move_pos = self.glu_agent.get_action()
                 if manhattan_distance(move_pos, self.glu_agent.current_pos) > 1:
                     (px, py) = self.player.get_position()
@@ -149,9 +160,13 @@ class TileManager(object):
                     self.glu_agent.move(move_pos[0], move_pos[1])
                     self.ui_move_player(move_pos[0], move_pos[1])
             else:
-
                 print("opend all safe node and gold is " +
                       str(len(self.glu_agent.gold_list)))
+                print("Position of all gold is: ")
+                print(self.glu_agent.gold_list)
+                print("Num steps: ")
+                print(len(self.log_ui_pos))
+                self.game_over = True
 
     def render_all_ui(self, surface):
         all_safe_nodes = self.glu_agent.kb.get_map_solved()
@@ -162,19 +177,22 @@ class TileManager(object):
         for stench in self.stench_group:
             pos = stench.get_position()
             if(all_safe_nodes[pos[0]][self.shape[0] - pos[1] - 1] != "?"):
-                stench.show()
+                # stench.show()
+                pass
             stench.tile_render(surface)
 
         for breeze in self.breeze_group:
             pos = breeze.get_position()
             if(all_safe_nodes[pos[0]][self.shape[0] - pos[1] - 1] != "?"):
-                breeze.show()
+                # breeze.show()
+                pass
             breeze.tile_render(surface)
 
         for gold in self.gold_group:
             pos = gold.get_position()
             if(all_safe_nodes[pos[0]][self.shape[0] - pos[1] - 1] != "?"):
-                gold.show()
+                # gold.show()
+                pass
             gold.tile_render(surface)
 
         for pit in self.pit_group:
