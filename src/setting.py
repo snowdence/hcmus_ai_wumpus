@@ -5,8 +5,7 @@ class Setting:
     # GAME GRAPHIC OPTIONS
     FPS = 60
     WIDTH = 1280
-    HEIGHT = 768
-
+    HEIGHT = 640
     M_WIDTH = 700
     M_HEIGHT = 500
 

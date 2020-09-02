@@ -13,10 +13,11 @@ except:
 
 
 class Gold(GameObject):
-    def __init__(self, tile_manager, position, tile_size=None):
+    def __init__(self, tile_manager, position, visible=True, tile_size=None):
         super().__init__(position=position, tile_size=tile_size,
                          image_file=gpath.PATH_IMAGE + "3x/gold.png")
         self.tile_manager = tile_manager
+        self.visible = visible
 
     def tile_render(self, surface):
         self.render(surface)
